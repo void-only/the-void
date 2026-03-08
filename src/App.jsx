@@ -124,6 +124,20 @@ export default function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState('');
 
+  // --- Set Tab Title & Favicon Dynamically ---
+  useEffect(() => {
+    document.title = "The Void";
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.type = 'image/svg+xml';
+    // Minimalist Dark Circle SVG representing the Void
+    link.href = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000' stroke='rgba(255,255,255,0.7)' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3C/svg%3E";
+  }, []);
+
   // Fetch Marks on Load using Supabase REST API
   useEffect(() => {
     const fetchMarks = async () => {
