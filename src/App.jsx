@@ -36,10 +36,10 @@ const getEmoji = (name) => {
 // --- Hardware Details ---
 const BoxNails = () => (
   <>
-    <div className="absolute top-3 left-3 w-1.5 h-1.5 border border-white/30 rounded-full pointer-events-none" />
-    <div className="absolute top-3 right-3 w-1.5 h-1.5 border border-white/30 rounded-full pointer-events-none" />
-    <div className="absolute bottom-3 left-3 w-1.5 h-1.5 border border-white/30 rounded-full pointer-events-none" />
-    <div className="absolute bottom-3 right-3 w-1.5 h-1.5 border border-white/30 rounded-full pointer-events-none" />
+    <div className="absolute top-3 left-3 w-1.5 h-1.5 border border-white/40 rounded-full pointer-events-none" />
+    <div className="absolute top-3 right-3 w-1.5 h-1.5 border border-white/40 rounded-full pointer-events-none" />
+    <div className="absolute bottom-3 left-3 w-1.5 h-1.5 border border-white/40 rounded-full pointer-events-none" />
+    <div className="absolute bottom-3 right-3 w-1.5 h-1.5 border border-white/40 rounded-full pointer-events-none" />
   </>
 );
 
@@ -259,6 +259,9 @@ export default function App() {
   const hours = timeParts.find(p => p.type === 'hour')?.value || '00';
   const minutes = timeParts.find(p => p.type === 'minute')?.value || '00';
 
+  // Reusable Box styling with higher opacity and subtle glow
+  const voidBoxClasses = "relative border border-white/40 bg-white/[0.08] hover:bg-white/[0.12] shadow-[0_0_20px_rgba(255,255,255,0.03)] hover:shadow-[0_0_30px_rgba(255,255,255,0.08)] transition-all duration-500 p-8 md:p-12 rounded-lg";
+
   return (
     <div className="min-h-[200vh] flex flex-col bg-black font-mono text-white selection:bg-white selection:text-black relative overflow-hidden">
       
@@ -320,48 +323,22 @@ export default function App() {
           className="max-w-5xl w-full pb-32 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
         >
           
-          {/* About & Voice Note - Spans full width on desktop */}
-          <motion.div variants={itemVariants} className="md:col-span-2 relative border border-white/30 bg-white/[0.05] hover:bg-white/[0.08] transition-colors duration-500 p-8 md:p-12 rounded-lg">
+          {/* About - Spans full width on desktop */}
+          <motion.div variants={itemVariants} className={`md:col-span-2 ${voidBoxClasses}`}>
             <BoxNails />
             <h2 className="text-white/50 text-[10px] md:text-xs tracking-[0.3em] uppercase mb-6 flex items-center font-semibold">
               <User size={14} className="mr-3 opacity-70" /> About
             </h2>
-            <p className="text-white/90 text-sm md:text-base leading-relaxed mb-10">
+            <p className="text-white/90 text-sm md:text-base leading-relaxed">
               This page exists mostly for myself.<br />
               Just a small place where I leave a few things behind.<br />
               Things I like, things I don’t, thoughts now and then.<br />
               Nothing more than that.
             </p>
-
-            {/* Audio Player Component */}
-            <div className="flex items-center gap-4 border-t border-white/10 pt-8 w-full sm:w-auto">
-              {/* Ensure your .mp3 file is placed in the 'public' folder of your React app and named 'voice.mp3' */}
-              <audio ref={audioRef} src="/voice.mp3" preload="metadata" />
-              <button
-                onClick={togglePlay}
-                className="flex items-center justify-center w-12 h-12 rounded-full border border-white/40 hover:bg-white/10 hover:border-white/60 transition-all text-white/90 hover:text-white hover:scale-105"
-              >
-                {isPlaying ? <Pause size={18} /> : <Play size={18} className="ml-1" />}
-              </button>
-              <div className="flex flex-col">
-                <span className="text-white/70 text-xs tracking-widest uppercase font-semibold">Voice Note</span>
-                <span className="text-white/50 text-[10px] mt-0.5">{isPlaying ? "Playing..." : "Listen"}</span>
-              </div>
-              
-              {/* Tiny Equalizer Animation when playing */}
-              {isPlaying && (
-                <div className="flex items-end gap-[3px] h-4 ml-4">
-                  <motion.div animate={{ height: [4, 14, 4] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-1 bg-white/60 rounded-full" />
-                  <motion.div animate={{ height: [4, 18, 4] }} transition={{ repeat: Infinity, duration: 1.0, delay: 0.2 }} className="w-1 bg-white/60 rounded-full" />
-                  <motion.div animate={{ height: [4, 10, 4] }} transition={{ repeat: Infinity, duration: 0.9, delay: 0.4 }} className="w-1 bg-white/60 rounded-full" />
-                  <motion.div animate={{ height: [4, 16, 4] }} transition={{ repeat: Infinity, duration: 1.1, delay: 0.1 }} className="w-1 bg-white/60 rounded-full" />
-                </div>
-              )}
-            </div>
           </motion.div>
 
           {/* Likes and Dislikes - Spans full width, splits internally */}
-          <motion.div variants={itemVariants} className="md:col-span-2 relative border border-white/30 bg-white/[0.05] hover:bg-white/[0.08] transition-colors duration-500 p-8 md:p-12 rounded-lg">
+          <motion.div variants={itemVariants} className={`md:col-span-2 ${voidBoxClasses}`}>
             <BoxNails />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
               <div>
@@ -390,7 +367,7 @@ export default function App() {
           </motion.div>
 
           {/* Currently - Half width on desktop */}
-          <motion.div variants={itemVariants} className="md:col-span-1 relative border border-white/30 bg-white/[0.05] hover:bg-white/[0.08] transition-colors duration-500 p-8 md:p-12 rounded-lg flex flex-col">
+          <motion.div variants={itemVariants} className={`md:col-span-1 flex flex-col ${voidBoxClasses}`}>
             <BoxNails />
             <h2 className="text-white/50 text-[10px] md:text-xs tracking-[0.3em] uppercase mb-6 flex items-center font-semibold">
               <Terminal size={14} className="mr-3 opacity-70" /> Currently
@@ -401,7 +378,7 @@ export default function App() {
           </motion.div>
 
           {/* Leave a Mark (Glimpse Panel) - Half width on desktop */}
-          <motion.div variants={itemVariants} className="md:col-span-1 relative border border-white/30 bg-white/[0.05] hover:bg-white/[0.08] transition-colors duration-500 p-8 md:p-12 rounded-lg flex flex-col">
+          <motion.div variants={itemVariants} className={`md:col-span-1 flex flex-col ${voidBoxClasses}`}>
             <BoxNails />
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-white/50 text-[10px] md:text-xs tracking-[0.3em] uppercase flex items-center font-semibold">
@@ -438,8 +415,8 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full flex flex-col items-center justify-end pb-4 px-4 md:px-8 relative z-10">
-        <div className="w-full max-w-2xl relative border border-white/30 bg-white/[0.03] rounded-lg flex items-center justify-center min-h-[140px]">
+      <footer className="w-full flex flex-col items-center justify-end pb-8 px-4 md:px-8 relative z-10">
+        <div className="w-full max-w-2xl relative border border-white/30 bg-white/[0.04] shadow-[0_0_20px_rgba(255,255,255,0.02)] rounded-lg flex items-center justify-center min-h-[140px]">
           <BoxNails />
           <AnimatePresence>
             <motion.div
@@ -457,7 +434,7 @@ export default function App() {
         </div>
 
         <div className="mt-16 flex flex-col items-center gap-6">
-          <div className="flex items-center gap-8 px-8 py-3 border border-white/30 bg-white/[0.03] rounded-full">
+          <div className="flex items-center gap-8 px-8 py-3 border border-white/30 bg-white/[0.03] rounded-full shadow-[0_0_20px_rgba(255,255,255,0.02)]">
             <a href="https://github.com/void-only" onClick={(e) => { e.preventDefault(); window.open("https://github.com/void-only", "_blank"); }} className="text-white/50 hover:text-white transition-all duration-300 hover:scale-110 cursor-pointer"><Github size={18} strokeWidth={1.5} /></a>
             <a href="https://discord.gg/GEUt7TXDqk" onClick={(e) => { e.preventDefault(); window.open("https://discord.gg/GEUt7TXDqk", "_blank"); }} className="text-white/50 hover:text-white transition-all duration-300 hover:scale-110 cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
@@ -471,6 +448,40 @@ export default function App() {
         </div>
       </footer>
 
+      {/* Floating Corner Voice Note */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex items-center gap-2 bg-black/60 backdrop-blur-xl border border-white/20 p-2 md:p-3 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:bg-black/80 hover:border-white/40 transition-all duration-300"
+      >
+        <audio ref={audioRef} src="/voice.mp3" preload="metadata" />
+        
+        <button
+          onClick={togglePlay}
+          className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/30 transition-all text-white/90 hover:text-white hover:scale-105"
+          title="Play Voice Note"
+        >
+          {isPlaying ? <Pause size={16} /> : <Play size={16} className="ml-1" />}
+        </button>
+
+        {isPlaying && (
+          <div className="flex items-end gap-[3px] h-3 ml-2 mr-3 md:ml-3 md:mr-4">
+            <motion.div animate={{ height: [3, 10, 3] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-[2px] bg-white/70 rounded-full" />
+            <motion.div animate={{ height: [3, 14, 3] }} transition={{ repeat: Infinity, duration: 1.0, delay: 0.2 }} className="w-[2px] bg-white/70 rounded-full" />
+            <motion.div animate={{ height: [3, 8, 3] }} transition={{ repeat: Infinity, duration: 0.9, delay: 0.4 }} className="w-[2px] bg-white/70 rounded-full" />
+            <motion.div animate={{ height: [3, 12, 3] }} transition={{ repeat: Infinity, duration: 1.1, delay: 0.1 }} className="w-[2px] bg-white/70 rounded-full" />
+          </div>
+        )}
+        
+        {/* Shows text next to button when paused on desktop */}
+        {!isPlaying && (
+          <span className="text-white/50 text-[10px] uppercase tracking-widest pl-2 pr-4 font-semibold hidden md:block">
+            Voice Note
+          </span>
+        )}
+      </motion.div>
+
       {/* Guestbook Overlay Modal */}
       <AnimatePresence>
         {isModalOpen && (
@@ -483,7 +494,7 @@ export default function App() {
           >
             <motion.div 
               initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }} transition={{ duration: 0.4, delay: 0.1 }}
-              className="max-w-2xl w-full relative border border-white/30 bg-[#080808] p-6 md:p-10 rounded-lg mt-10 md:mt-20 mb-20 shadow-2xl"
+              className="max-w-2xl w-full relative border border-white/30 bg-[#080808] p-6 md:p-10 rounded-lg mt-10 md:mt-20 mb-20 shadow-[0_0_30px_rgba(255,255,255,0.05)]"
             >
               <button 
                 onClick={() => setIsModalOpen(false)}
